@@ -2,10 +2,9 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import 'dotenv/config';
 
-const login = process.env.LOGIN ;
-const password = process.env.PASSWORD ;
-const monCredentials = `${login}:${password}`;
-const monCredentialsBase64 = Buffer.from(monCredentials).toString('base64');
+import { useSelector } from 'react-redux';
+
+const monCredentialsBase64 = useSelector(state => state.auth.token)
 
 const URL_Adress = process.env.URL_DATABASE + 'ingredients';
 

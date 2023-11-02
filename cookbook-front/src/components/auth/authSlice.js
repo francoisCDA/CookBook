@@ -1,19 +1,26 @@
 import { createSlice } from '@reduxjs/toolkit' ;
 
+
+
+
 const authSlice = createSlice({
     name: "auth",
     initialState: {
-        user: false  // peut être plus logique de mettre admin, mais tu as dû utiliser user.
+        user: false,  // peut être plus logique de mettre admin, mais tu as dû utiliser user.
+        token: ''
     },
     reducers: {
-        connect: (state, action) => {
+        adminConnect: (state, action) => {
             state.user = true;
         },
-        disconnect: (state, action) => {
+        adminDisconnect: (state, action) => {
             state.user = false;
+        },
+        setToken: (state, action) => {
+            state.token = action.payload;
         }
     }
 })
 
-export const { connect, disconnect } = authSlice.actions ;
+export const { adminConnect, adminDisconnect, setToken } = authSlice.actions ;
 export default authSlice.reducer ;
