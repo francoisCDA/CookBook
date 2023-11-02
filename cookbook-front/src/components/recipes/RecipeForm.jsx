@@ -17,6 +17,7 @@ const RecipeForm = () => {
     const ingredientsRef = useRef()
     const ingredientQuantityRef = useRef()
     const ingredientsUnityRef = useRef()
+    const pictureURLRef = useRef()
 
     const submitFormHandler = (event) => {
         event.preventDefault()
@@ -29,19 +30,20 @@ const RecipeForm = () => {
         }
 
         const newRecipe = {
-            title: titleRef.current.value,
-            cookTime: +cookTimeRef.current.value,
-            prepTime: +prepTimeRef.current.value,
-            instructions: instructionsRef.current.value,
-            ingredientQuantity: +ingredientQuantityRef.current.value,
-            ingredients: selectedIngredients,
-            ingredientsUnity: ingredientsUnityRef.current.value
+            // title: titleRef.current.value,
+            // cookTime: +cookTimeRef.current.value,
+            // prepTime: +prepTimeRef.current.value,
+            // instructions: instructionsRef.current.value,
+            // ingredientQuantity: +ingredientQuantityRef.current.value,
+            // ingredients: selectedIngredients,
+            // ingredientsUnity: ingredientsUnityRef.current.value,
+            // pictureURL : pictureURLRef.current.value
         }
 
-        if(mode === "add") {
+        if (mode === "ajouter") {
             dispatch(axiosPostRecipe(newRecipe))
-        } else if (mode === "edit") {
-            dispatch(axiosUpdateRecipe({...newRecipe, id : recipe.id})) 
+        } else if (mode === "mettre à jour") {
+            dispatch(axiosUpdateRecipe({ ...newRecipe, id: recipe.id }))
         }
         dispatch(setFormMode(""))
         navigate("/")
@@ -50,39 +52,43 @@ const RecipeForm = () => {
 
     return (
         <>
-            <h1>Ajouter une recette</h1>
+            <h1>{mode} une recette</h1>
             <hr />
             <form onSubmit={submitFormHandler}>
                 <div className="mb-3">
                     <label htmlFor="title" className="form-label">Titre :</label>
-                    <input type="text" className="form-control" required ref={titleRef} />
+                    <input type="text" className="form-control" required ref={titleRef} defaultValue={recipe?.title} />
                 </div>
                 <div className="mb-3">
                     <label htmlFor="cookTime" className="form-label">Temps de cuisson:</label>
-                    <input type="number" className="form-control" required min={1} ref={cookTimeRef} />
+                    <input type="number" className="form-control" required min={1} ref={cookTimeRef} defaultValue={recipe?.cookTime} />
                 </div>
                 <div className="mb-3">
                     <label htmlFor="prepTime" className="form-label">Temps de préparation:</label>
-                    <input type="number" className="form-control" required min={1} ref={prepTimeRef} />
+                    <input type="number" className="form-control" required min={1} ref={prepTimeRef} defaultValue={recipe?.prepTime} />
                 </div>
                 <div className="mb-3">
                     <label htmlFor="instructions" className="form-label">Instructions:</label>
-                    <textarea className="form-control" cols={30} rows={10} required ref={instructionsRef} />
+                    <textarea className="form-control" cols={30} rows={10} required ref={instructionsRef} defaultValue={recipe?.instructions} />
                 </div>
                 <div className="mb-3">
-                            <label htmlFor="ingredients" className="form-label">Ingredients:</label>
-                                <label htmlFor="quantity">Quantité :</label>
+                    <label htmlFor="ingredients" className="form-label">Ingredients:</label>
+                    <label htmlFor="quantity">Quantité :</label>
                     <input type="number" className="form-control" required ref={ingredientQuantityRef} />
-                    <select name="ingredients" id="ingredients" className="form-select" required multiple ref={ingredientsRef}>
-                                        {ingredients.map(ingredient => <option key={ingredient.id} value={ingredient.id}>{ingredient.name}</option>)}
+                    <select name="ingredients" id="ingredients" className="form-select" required multiple ref={ingredientsRef} defaultValue={recipe?.ingredient}>
+                        {ingredients.map(ingredient => <option key={ingredient.id} value={ingredient.id}>{ingredient.name}</option>)}
                     </select>
                     <label htmlFor="ingredientsUnity" className="form-label">Unité :</label>
                     <input type="text" className="form-control" required ref={ingredientsUnityRef} />
                 </div>
-                <div clasName="text-end">
-                    <button clasName="btn btn-success">Add</button>
+                <div className="mb-3">
+                    <label htmlFor="pictureURL" className="form-label">Image URL: </label>
+                    <input type="text" className="form-control" required ref={pictureURLRef} defaultValue={recipe?.pictureURL} />
                 </div>
-            </form>
+                <div clasName="text-end">
+                    <button className={`btn btn-${mode === 'add' ? 'success' : 'warning'}`}><i className={`bi bi-${mode === 'edit' ? 'pencil-square' : 'plus-circle'}`}></i>{mode}</button>
+                </div>
+            </form >
         </>
     );
 }
