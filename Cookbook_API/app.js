@@ -1,10 +1,13 @@
 import express from 'express';
 import recettes from './routes/recettes.js';
 import ingredients from './routes/ingredients.js';
+import cors from 'cors';
+
 
 const port = 3333;
 const app = express();
 
+app.use(cors());
 app.use(express.json());
 
 app.use('/recipes', recettes);
