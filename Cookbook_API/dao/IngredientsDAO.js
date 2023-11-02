@@ -41,7 +41,7 @@ export class IngredientDAO {
         if (indx == -1 ) { return {error: `id ingredient inconnu : ${id}`}}
         this.ingredients[indx].nom == nom ;
         this.saveLstIngredients();
-        return indx ;
+        return this.ingredients[indx] ;
     }
 
     delIngredient(id) {

@@ -4,7 +4,8 @@ import 'dotenv/config';
 
 const login = process.env.LOGIN ;
 const password = process.env.PASSWORD ;
-const monCredentials = btoa(login +':'+password) ;
+const monCredentials = `${login}:${password}`;
+const monCredentialsBase64 = Buffer.from(monCredentials).toString('base64');
 
 const URL_Adress = process.env.URL_DATABASE + 'recipes';
 
@@ -21,10 +22,10 @@ export const axiosGetAllRecipes = createAsyncThunk(
 )
 
 export const axiosPostRecipe = createAsyncThunk(
-    "trackerpro/axiosPostRecipe",
+    "recipe/axiosPostRecipe", 
     async (newRecipe) => {
         try {
-            const reponse = await axios.post(`${URL_Adress}`, newRecipe, {headers:{Authorization:'Basic '+ monCredentials }})
+            const reponse = await axios.post(`${URL_Adress}`, newRecipe, {headers:{Authorization:'Basic '+ monCredentialsBase64,'Content-Type': 'application/json' }})
             return reponse.data;
         } catch (error) {
             console.error(error.message);
@@ -33,10 +34,10 @@ export const axiosPostRecipe = createAsyncThunk(
 )
 
 export const axiosDeleteRecipe = createAsyncThunk(
-    "trackerpro/axiosDeleteRecipe",
+    "recipe/axiosDeleteRecipe",
     async (id) => {
         try {
-            const reponse = await axios.delete(`${URL_Adress}/${id}`, {headers:{Authorization:'Basic '+ monCredentials }})
+            const reponse = await axios.delete(`${URL_Adress}/${id}`, {headers:{Authorization:'Basic '+ monCredentialsBase64 }})
             return id;
         } catch (error) {
             console.error(error.message);
@@ -45,7 +46,7 @@ export const axiosDeleteRecipe = createAsyncThunk(
 )
 
 export const axiosGetRecipeById = createAsyncThunk(
-    "trackerpro/axiosGetRecipeById",
+    "recipe/axiosGetRecipeById",
     async (id) => {
         try {
             const reponse = await axios.get(`${URL_Adress}/${id}`)
@@ -57,10 +58,10 @@ export const axiosGetRecipeById = createAsyncThunk(
 )
 
 export const axiosUpdateRecipe = createAsyncThunk(
-    "trackerpro.axiosUpdateRecipe",
+    "recipe.axiosUpdateRecipe",
     async ({ id, recipe }) => {
         try {
-            const reponse = await axios.put(`${URL_Adress}/${id}`, recipe, {headers:{Authorization:'Basic '+ monCredentials }})
+            const reponse = await axios.put(`${URL_Adress}/${id}`, recipe, {headers:{Authorization:'Basic '+ monCredentialsBase64,'Content-Type': 'application/json'  }})
             return reponse.data;
         } catch (error) {
             console.error(error.message);
@@ -70,7 +71,7 @@ export const axiosUpdateRecipe = createAsyncThunk(
 
 const recipesSlice = createSlice({
 
-    name: "recipe",
+    name: "recipe", // le nom est au singulier, c'est ce qu'il faut indiquer dans le store
     initialState: {
         recipes: [],
         recipeSelected: false,
@@ -94,7 +95,7 @@ const recipesSlice = createSlice({
             state.recipes.push(action.payload)
         })
         builder.addCase(axiosDeleteRecipe.fulfilled, (state, action) => {
-            state.recipes = state.recipes.filter(r => r.id == action.payload.id);
+            state.recipes = state.recipes.filter(r => r.id == action.payload); // à vérifier, mais pour le delete, ça ne devrait pas être action.payload, car ce n'est pas un objet qui est renvoyé
         })
         builder.addCase(axiosUpdateRecipe.fulfilled, (state, action) => {
             const idx = state.recipes.findIndex(r => r.id == action.payload.id);
@@ -104,5 +105,5 @@ const recipesSlice = createSlice({
 
 })
 
-export const { } = recipesSlice.actions
+export const { selectRecipe, setFormMode } = recipesSlice.actions
 export default recipesSlice.reducer

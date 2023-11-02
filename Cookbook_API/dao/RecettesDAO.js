@@ -44,7 +44,7 @@ export class RecetteDAO {
         this.recettes[indx].instructions = instructions;
         this.recettes[indx].urlImage = urlImage;
         this.saveLstRecettes();
-        return indx ; // a voir..
+        return this.recettes[indx] ; 
     }
 
     delRecette(id) {
