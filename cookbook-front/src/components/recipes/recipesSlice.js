@@ -1,7 +1,12 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import axios from 'axios'
+import 'dotenv/config';
 
-const URL_Adress = "http://127.0.0.1:3333/"
+const login = process.env.LOGIN ;
+const password = process.env.PASSWORD ;
+const monCredentials = btoa(login +':'+password) ;
+
+const URL_Adress = process.env.URL_DATABASE + 'recipes';
 
 export const axiosGetAllRecipes = createAsyncThunk(
     "recipe/axiosGetAllRecipes",
@@ -19,7 +24,7 @@ export const axiosPostRecipe = createAsyncThunk(
     "trackerpro/axiosPostRecipe",
     async (newRecipe) => {
         try {
-            const reponse = await axios.post(`${URL_Adress}`, newRecipe)
+            const reponse = await axios.post(`${URL_Adress}`, newRecipe, {headers:{Authorization:'Basic '+ monCredentials }})
             return reponse.data;
         } catch (error) {
             console.error(error.message);
@@ -31,7 +36,7 @@ export const axiosDeleteRecipe = createAsyncThunk(
     "trackerpro/axiosDeleteRecipe",
     async (id) => {
         try {
-            const reponse = await axios.delete(`${URL_Adress}/${id}`)
+            const reponse = await axios.delete(`${URL_Adress}/${id}`, {headers:{Authorization:'Basic '+ monCredentials }})
             return id;
         } catch (error) {
             console.error(error.message);
@@ -55,7 +60,7 @@ export const axiosUpdateRecipe = createAsyncThunk(
     "trackerpro.axiosUpdateRecipe",
     async ({ id, recipe }) => {
         try {
-            const reponse = await axios.put(`${URL_Adress}/${id}`, recipe)
+            const reponse = await axios.put(`${URL_Adress}/${id}`, recipe, {headers:{Authorization:'Basic '+ monCredentials }})
             return reponse.data;
         } catch (error) {
             console.error(error.message);
