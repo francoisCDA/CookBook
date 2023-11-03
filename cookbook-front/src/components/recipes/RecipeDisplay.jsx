@@ -1,11 +1,15 @@
 import { useDispatch, useSelector} from "react-redux"
 import {setFormMode, selectRecipe, axiosDeleteRecipe} from './recipesSlice.js'
+import { useEffect } from "react"
 
 const RecipeDisplay = () => {
 
     const dispatch = useDispatch()
     const recipe = propos.recipe
     const user = useSelector(state => state.auth.user)
+    const recipes = useSelector(state => state.recipe.recipes)
+
+    useEffect
 
     const editForm = () => {
         dispatch(setFormMode("mettre à jour"))
