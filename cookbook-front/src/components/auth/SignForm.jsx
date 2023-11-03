@@ -25,7 +25,7 @@ const SignForm = () => {
     const axiosGetAdmin = async () => {
 
         const monCredentials = `${refLogin.current.value}:${refPassword.current.value}`;
-        const monCredentialsBase64 = Buffer.from(monCredentials).toString('base64');         
+        const monCredentialsBase64 = btoa(monCredentials);         
 
         try {
             const reponse = await axios.get(URL_API, {headers:{Authorization:'Basic '+ monCredentialsBase64}});
@@ -55,12 +55,12 @@ const SignForm = () => {
             <h2>Identification</h2>
             <form action="#">
                 <label htmlFor="login">Login : </label>
-                <input type="text" id="login" name="login" required/>
+                <input type="text" id="login" name="login" ref={refLogin} required/>
 
                 <br/>
 
                 <label htmlFor="passwrd">Mot de passe : </label>
-                <input type="password" id="passwrd" name="passwrd" required />
+                <input type="password" id="passwrd" name="passwrd" ref={refPassword} required />
 
                 <hr/>
 
