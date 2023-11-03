@@ -6,7 +6,7 @@ import { useDispatch } from "react-redux";
 function Navbar() {
     // const dispatch = useDispatch()
     // const user = useSelector(state => state.auth.user)
-    const user = true
+    const user = false
     return (
         <nav className="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
 
@@ -25,7 +25,7 @@ function Navbar() {
                             Déconnexion
                         </button>
                     ) : (
-                        <Link className="btn btn-primary ms-auto" to="/sign">
+                        <Link className="btn btn-primary ms-auto" to="/SignForm">
                             Sign In
                         </Link>
                     )}
