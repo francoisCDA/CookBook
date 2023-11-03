@@ -20,7 +20,7 @@ export const axiosPostIngredient = createAsyncThunk(
     "ingredients/axiosPostIngredient",
     async ({newIngre,monCredentialsBase64}) => {
         try {
-            const reponse = await axios.post(URL_Adress, newIngre, {headers:{Authorization:'Basic '+ monCredentialsBase64,'Content-Type': 'application/json' }});
+            const reponse = await axios.post(URL_Adress, newIngre, { headers: {'Authorization': `Bearer ${monCredentialsBase64}` }});
             return reponse.data ;
         } catch (error) {
             console.error(error.message)
@@ -32,7 +32,7 @@ export const axiosPutIngredient = createAsyncThunk(
     "ingredients/axiosPutIngredient",
     async ({id,udpIngre,monCredentialsBase64}) => {
         try {
-            const reponse = await axios.put(URL_Adress+`/${id}`, udpIngre, {headers:{Authorization:'Basic '+ monCredentialsBase64,'Content-Type': 'application/json' }});
+            const reponse = await axios.put(URL_Adress+`/${id}`, udpIngre, { headers: {'Authorization': `Bearer ${monCredentialsBase64}` }});
             return reponse.data ;
         } catch (error) {
             console.error(error.message)
@@ -42,9 +42,9 @@ export const axiosPutIngredient = createAsyncThunk(
 
 export const axiosDelIngredient = createAsyncThunk(
     "ingredients/axiosDelIngredient",
-    async (id) => {
+    async ({id,monCredentialsBase64}) => {
         try {
-            const reponse = await axios.delete(URL_Adress+`/${id}`, {headers:{Authorization:'Basic '+ monCredentialsBase64}} )
+            const reponse = await axios.delete(URL_Adress+`/${id}`, { headers: {'Authorization': `Bearer ${monCredentialsBase64}` }} )
             return id ;
         } catch (error) {
             console.error(error.message)
