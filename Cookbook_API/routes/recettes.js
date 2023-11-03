@@ -1,5 +1,5 @@
 import express from "express";
-import { RecetteDAO } from "../dao/recettesDAO.js";
+import { RecetteDAO } from "../dao/RecettesDAO.js";
 import { chkAuth } from "../middleware/chkAuth.js";
 
 const recetteDao = new RecetteDAO();

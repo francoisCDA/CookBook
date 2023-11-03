@@ -1,12 +1,11 @@
+
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import axios from 'axios'
-import 'dotenv/config';
 
-import { useSelector } from 'react-redux';
 
-const monCredentialsBase64 = useSelector(state => state.auth.token)
 
-const URL_Adress = process.env.URL_DATABASE + 'recipes';
+
+const URL_Adress = 'http://127.0.0.1:3333/' + 'recipes';
 
 export const axiosGetAllRecipes = createAsyncThunk(
     "recipe/axiosGetAllRecipes",
@@ -22,7 +21,7 @@ export const axiosGetAllRecipes = createAsyncThunk(
 
 export const axiosPostRecipe = createAsyncThunk(
     "recipe/axiosPostRecipe", 
-    async (newRecipe) => {
+    async ({newRecipe,monCredentialsBase64}) => {
         try {
             const reponse = await axios.post(`${URL_Adress}`, newRecipe, {headers:{Authorization:'Basic '+ monCredentialsBase64,'Content-Type': 'application/json' }})
             return reponse.data;
@@ -34,7 +33,7 @@ export const axiosPostRecipe = createAsyncThunk(
 
 export const axiosDeleteRecipe = createAsyncThunk(
     "recipe/axiosDeleteRecipe",
-    async (id) => {
+    async ({id,monCredentialsBase64}) => {
         try {
             const reponse = await axios.delete(`${URL_Adress}/${id}`, {headers:{Authorization:'Basic '+ monCredentialsBase64 }})
             return id;
@@ -58,7 +57,7 @@ export const axiosGetRecipeById = createAsyncThunk(
 
 export const axiosUpdateRecipe = createAsyncThunk(
     "recipe.axiosUpdateRecipe",
-    async ({ id, recipe }) => {
+    async ({ id, recipe,monCredentialsBase64 }) => {
         try {
             const reponse = await axios.put(`${URL_Adress}/${id}`, recipe, {headers:{Authorization:'Basic '+ monCredentialsBase64,'Content-Type': 'application/json'  }})
             return reponse.data;

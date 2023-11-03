@@ -1,4 +1,4 @@
-import 'dotenv';
+
 import axios from 'axios';
 import { useRef } from 'react';
 import { useDispatch } from "react-redux"
@@ -8,9 +8,10 @@ import { adminConnect, setToken } from './authSlice';
 
 
 const SignForm = () => {
-
-
-const URL_API = process.env.URL_DATABASE + 'admin' ;
+    
+   
+    const URL_API = 'http://127.0.0.1:3333/' + 'admin' ;
+    console.log(URL_API)
 
     const refLogin = useRef();
     const refPassword = useRef();
@@ -23,7 +24,7 @@ const URL_API = process.env.URL_DATABASE + 'admin' ;
     // password = unepressionen50
     const axiosGetAdmin = async () => {
 
-        const monCredentials = `${refLogin}:${refPassword}`;
+        const monCredentials = `${refLogin.current.value}:${refPassword.current.value}`;
         const monCredentialsBase64 = Buffer.from(monCredentials).toString('base64');         
 
         try {
@@ -51,8 +52,23 @@ const URL_API = process.env.URL_DATABASE + 'admin' ;
     return (
         
         <>
-        
-        
+            <h2>Identification</h2>
+            <form action="#">
+                <label htmlFor="login">Login : </label>
+                <input type="text" id="login" name="login" required/>
+
+                <br/>
+
+                <label htmlFor="passwrd">Mot de passe : </label>
+                <input type="password" id="passwrd" name="passwrd" required />
+
+                <hr/>
+
+                <button type='button' onClick={axiosGetAdmin}>Sign In</button>
+            
+
+            </form>
+
         </>
 
     )

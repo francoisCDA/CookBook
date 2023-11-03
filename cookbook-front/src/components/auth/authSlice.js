@@ -15,6 +15,7 @@ const authSlice = createSlice({
         },
         adminDisconnect: (state, action) => {
             state.user = false;
+            state.token = '';
         },
         setToken: (state, action) => {
             state.token = action.payload;

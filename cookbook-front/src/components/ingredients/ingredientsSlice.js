@@ -1,12 +1,8 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
-import 'dotenv/config';
 
-import { useSelector } from 'react-redux';
 
-const monCredentialsBase64 = useSelector(state => state.auth.token)
-
-const URL_Adress = process.env.URL_DATABASE + 'ingredients';
+const URL_Adress = 'http://127.0.0.1:3333/' + 'ingredients';
 
 export const axiosGetAllIngredients =  createAsyncThunk(
     "ingredients/axiosGetAllIngredients",
@@ -22,7 +18,7 @@ export const axiosGetAllIngredients =  createAsyncThunk(
 
 export const axiosPostIngredient = createAsyncThunk(
     "ingredients/axiosPostIngredient",
-    async (newIngre) => {
+    async ({newIngre,monCredentialsBase64}) => {
         try {
             const reponse = await axios.post(URL_Adress, newIngre, {headers:{Authorization:'Basic '+ monCredentialsBase64,'Content-Type': 'application/json' }});
             return reponse.data ;
@@ -34,7 +30,7 @@ export const axiosPostIngredient = createAsyncThunk(
 
 export const axiosPutIngredient = createAsyncThunk(
     "ingredients/axiosPutIngredient",
-    async ({id,udpIngre}) => {
+    async ({id,udpIngre,monCredentialsBase64}) => {
         try {
             const reponse = await axios.put(URL_Adress+`/${id}`, udpIngre, {headers:{Authorization:'Basic '+ monCredentialsBase64,'Content-Type': 'application/json' }});
             return reponse.data ;
