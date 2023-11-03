@@ -1,5 +1,5 @@
 import express  from "express";
-import { chkAuth } from "../middleware/chkAuth";
+import { chkAuth } from "../middleware/chkAuth.js";
 
 
 const auth = express.Router();
