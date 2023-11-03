@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 
 const monCredentialsBase64 = useSelector(state => state.auth.token)
 
-const URL_Adress = process.env.URL_DATABASE + 'ingredients';
+const URL_Adress = process.env.URL_API + 'ingredients';
 
 export const axiosGetAllIngredients =  createAsyncThunk(
     "ingredients/axiosGetAllIngredients",

@@ -10,7 +10,7 @@ import { adminConnect, setToken } from './authSlice';
 const SignForm = () => {
 
 
-const URL_API = process.env.URL_DATABASE + 'admin' ;
+const URL_API = process.env.URL_API + 'admin' ;
 
     const refLogin = useRef();
     const refPassword = useRef();

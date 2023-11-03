@@ -2,7 +2,7 @@ import { createBrowserRouter } from "react-router-dom";
 import SignForm from "./components/auth/SignForm.jsx";
 import App from "./App.jsx";
 import DetailsRecipe from "./components/recipes/DetailsRecipe.jsx";
-import RecipeForm from "./components/recipes/recipeForm.jsx";
+import RecipeForm from "./components/recipes/RecipeForm.jsx";
 
 
 const router = createBrowserRouter([
@@ -19,8 +19,12 @@ const router = createBrowserRouter([
                 element: <SignForm />
             },
             {
-                path: "/DetailRecipe",
+                path: "/DetailRecipe/:id",
                 element: <DetailsRecipe />
+            },
+            {
+                path: "/edit/:id",
+                element: <ALbumForm />
             }
         ]
     },

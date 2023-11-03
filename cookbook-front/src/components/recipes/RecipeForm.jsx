@@ -30,14 +30,14 @@ const RecipeForm = () => {
         }
 
         const newRecipe = {
-            // title: titleRef.current.value,
-            // cookTime: +cookTimeRef.current.value,
-            // prepTime: +prepTimeRef.current.value,
-            // instructions: instructionsRef.current.value,
-            // ingredientQuantity: +ingredientQuantityRef.current.value,
-            // ingredients: selectedIngredients,
-            // ingredientsUnity: ingredientsUnityRef.current.value,
-            // pictureURL : pictureURLRef.current.value
+            title: titleRef.current.value,
+            cookTime: +cookTimeRef.current.value,
+            prepTime: +prepTimeRef.current.value,
+            instructions: instructionsRef.current.value,
+            ingredientQuantity: +ingredientQuantityRef.current.value,
+            ingredients: selectedIngredients,
+            ingredientsUnity: ingredientsUnityRef.current.value,
+            pictureURL : pictureURLRef.current.value
         }
 
         if (mode === "ajouter") {
